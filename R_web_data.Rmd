@@ -1,0 +1,51 @@
+---
+title: "R_web_data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+# Read the URL.
+url <- "http://www.geos.ed.ac.uk/~weather/jcmb_ws/"
+
+# Gather the html links present in the webpage.
+links <- getHTMLLinks(url)
+
+# Identify only the links which point to the JCMB 2015 files. 
+filenames <- links[str_detect(links, "JCMB_2015")]
+
+# Store the file names as a list.
+filenames_list <- as.list(filenames)
+
+# Create a function to download the files by passing the URL and filename list.
+downloadcsv <- function (mainurl,filename) {
+   filedetails <- str_c(mainurl,filename)
+   download.file(filedetails,filename)
+}
+
+# Now apply the l_ply function and save the files into the current R working directory.
+l_ply(filenames,downloadcsv,mainurl = "http://www.geos.ed.ac.uk/~weather/jcmb_ws/")
+```
+
