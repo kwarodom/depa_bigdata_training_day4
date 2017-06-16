@@ -118,7 +118,7 @@ print(model)
 cat("# # # # The Coefficient Values # # # ","\n")
 
 a <- coef(model)[1]
-print(a)
+print(a)https://www.tutorialspoint.com/r/r_linear_regression.htm
 
 Xdisp <- coef(model)[2]
 Xhp <- coef(model)[3]
