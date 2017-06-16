@@ -1,0 +1,218 @@
+---
+title: "workshop_analyze_data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+str(birthwt)
+```
+```{r}
+aggregate(birthwt.grams ~ mother.smokes, data= birthwt, FUN=function(x) {c(mean(x), sd=sd(x))})
+```
+
+```{r}
+birthwt.t.test$p.value
+```
+
+```{r}
+birthwt.t.test$conf.int
+```
+
+```{r}
+
+```
+
+```{python}
+'''
+Chi-Square test is a statistical method to determine if two categorical variables have a significant correlation between them. Both those variables should be from same population and they should be categorical like − Yes/No, Male/Female, Red/Green etc.
+'''
+```
+
+```{r}
+x <- c(151, 174, 138, 186, 128, 136, 179, 163, 152, 131)
+y <- c(63, 81, 56, 91, 47, 57, 76, 72, 62, 48)
+
+# Apply the lm() function.
+relation <- lm(y~x)
+
+print(relation)
+```
+```{r}
+# Apply the lm() function.
+relation <- lm(y~x)
+
+print(summary(relation))
+```
+```{r}
+# The predictor vector.
+x <- c(151, 174, 138, 186, 128, 136, 179, 163, 152, 131)
+
+# The resposne vector.
+y <- c(63, 81, 56, 91, 47, 57, 76, 72, 62, 48)
+
+# Apply the lm() function.
+relation <- lm(y~x)
+
+# Find weight of a person with height 170.
+a <- data.frame(x = 170)
+result <-  predict(relation,a)
+print(result)
+```
+
+```{r}
+# Create the predictor and response variable.
+x <- c(151, 174, 138, 186, 128, 136, 179, 163, 152, 131)
+y <- c(63, 81, 56, 91, 47, 57, 76, 72, 62, 48)
+relation <- lm(y~x)
+
+# Give the chart file a name.
+png(file = "linearregression.png")
+
+# Plot the chart.
+plot(y,x,col = "blue",main = "Height & Weight Regression",
+abline(lm(x~y)),cex = 1.3,pch = 16,xlab = "Weight in Kg",ylab = "Height in cm")
+
+# Save the file.
+dev.off()
+```
+
+```{r}
+# R - Multiple Regression
+input <- mtcars[,c("mpg","disp","hp","wt")]
+print(head(input))
+```
+
+```{r}
+input <- mtcars[,c("mpg","disp","hp","wt")]
+
+# Create the relationship model.
+model <- lm(mpg~disp+hp+wt, data = input)
+
+# Show the model.
+print(model)
+
+# Get the Intercept and coefficients as vector elements.
+cat("# # # # The Coefficient Values # # # ","\n")
+
+a <- coef(model)[1]
+print(a)
+
+Xdisp <- coef(model)[2]
+Xhp <- coef(model)[3]
+Xwt <- coef(model)[4]
+
+print(Xdisp)
+print(Xhp)
+print(Xwt)
+```
+```{r}
+a <- coef(model)[1]
+print(a)
+```
+
+```{r}
+print(coef(model))
+```
+
+```{r}
+xdisp <- coef(model)[2]
+xhp <- coef(model)[3]
+xwt <- coef(model)[4]
+print(xdisp)
+print(xhp)
+print(xwt)
+```
+```{r}
+#Y = a+xdisp.x1+xhp.x2+xwt.x3
+
+# Multiple Linear Regression Example
+# Create the relationship model.
+model <- lm(mpg~disp+hp+wt, data = input)
+summary(model) # show results
+```
+
+```{r}
+layout(matrix(c(1,2,3,4),2,2)) # optional 4 graphs/page
+plot(model)
+```
+```{r}
+my_surface <- function(f, n=10, ...) { 
+  ranges <- rgl:::.getRanges()
+  x <- seq(ranges$xlim[1], ranges$xlim[2], length=n)
+  y <- seq(ranges$ylim[1], ranges$ylim[2], length=n)
+  z <- outer(x,y,f)
+  surface3d(x, y, z, ...)
+}
+library(rgl)
+f <- function(x1, x2)
+  sin(x1) * x2 + x1 * x2
+n <- 200
+x1 <- 4*runif(n)
+x2 <- 4*runif(n)
+y <- f(x1, x2) + rnorm(n, sd=0.3)
+plot3d(x1,x2,y, type="p", col="red", xlab="X1", ylab="X2", zlab="Y", site=5, lwd=15)
+my_surface(f, alpha=.2 )
+```
+```{r}
+birthwt.lm <- lm(birthwt.grams ~ mother.age + mother.smokes, data=birthwt)
+print(birthwt.lm)
+```
+
+```{r}
+qplot(data=birthwt, x=mother.age, y=birthwt.grams, colour=mother.smokes)+stat_smooth(method="lm", fullrange = TRUE)
+
+```
+
+```{r}
+qplot(x=EngineSize, y=MPG.city, data = Cars93,
+      colour=Cylinders,
+      shape=Cylinders,
+      xlab="Engine size (litres)",
+      ylab="Fuel economy (MPG city"
+      )
+```
+
+```{r}
+dim(diamonds)
+print(head(diamonds))
+```
+```{r}
+diamonds.plot <-ggplot(data = diamonds, aes(x=carat,y=price))
+diamonds.plot + geom_point()
+```
+
+```{r}
+diamonds.plot + geom_point() + facet_wrap(~cut)
+```
+```{r}
+diamonds.plot <-ggplot(data = diamonds, aes(x=carat,y=price, colour=color))
+```
+
+```{r}
+diamonds.plot <-ggplot(data = diamonds, aes(x=carat,y=price, colour=color))
+```
+
+
